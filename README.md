@@ -27,40 +27,34 @@ $ forge build
 $ forge test
 ```
 
-### Format
+### Test Coverage
 
-```shell
-$ forge fmt
+```
+forge coverage
 ```
 
-### Gas Snapshots
+and for coverage based testing: 
 
-```shell
-$ forge snapshot
+```
+forge coverage --report debug
 ```
 
-### Anvil
+# Audit Scope Details
 
-```shell
-$ anvil
+- Commit Hash:  7d55682ddc4301a7b13ae9413095feffd9924566
+- In Scope:
 ```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+./src/
+└── PasswordStore.sol
 ```
+- Solc Version: 0.8.18
+- Chain(s) to deploy contract to: Ethereum
 
-### Cast
+## Create the audit report
 
-```shell
-$ cast <subcommand>
-```
+View the [audit-report-templating](https://github.com/Cyfrin/audit-report-templating) repo to install all dependencies. 
 
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+```bash
+cd audits
+pandoc 2023-09-01-password-store-report.md -o report.pdf --from markdown --template=eisvogel --listings
 ```
