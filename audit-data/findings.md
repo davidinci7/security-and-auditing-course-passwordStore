@@ -1,4 +1,4 @@
-### [S-#] Storing the password on-chain makes it visible to anyone, and no longer private
+### [H-1] Storing the password on-chain makes it visible to anyone, and no longer private
 
 **Description:** All data stored on-chain is visible to anyone, and can be read directly from the blockchain.
 The `PasswordStore::s_password` variable is intended to be a private variable and only be accessed through
@@ -50,7 +50,7 @@ off-chain to decrypt the stored password. However, you're also likely want to re
 user to accidentally send a transaction with this decryption key.
 
 
-### [S-#] `PasswordStore::setPassword` has no access controls,  meaning a non-owner could change the password
+### [H-2] `PasswordStore::setPassword` has no access controls,  meaning a non-owner could change the password
 
 **Description:** The `PasswordStore::setPassword` function is set to be an `external` function, however, the natspec of the function and
 overall purpose of the smart contract is `This function allows only the owner to set a new password.`
@@ -91,4 +91,26 @@ overall purpose of the smart contract is `This function allows only the owner to
 if (msg.sender != s_owner) {
     revert PasswordStore__NotOwner();
 }
+```
+
+### [I-1] The `PasswordStore::getPassword` NatSpec Indicates a Non-Existent Parameter
+
+**Description:**
+
+```javascript
+/*
+ * @notice This allows only the owner to retrieve the password.
+ * @param newPassword The new password to set.
+ */
+function getPassword() external view returns (string memory) {
+```
+
+The `PasswordStore::getPassword` function signature is `getPassword()`, but the NatSpec incorrectly suggests it should be `getPassword(string)`.
+
+**Impact:** The NatSpec is incorrect, as it refers to a parameter that does not exist in the function signature.
+
+**Recommended Mitigation:** Remove the incorrect NatSpec line to accurately describe the function.
+
+```diff
+- * @param newPassword The new password to set.
 ```
